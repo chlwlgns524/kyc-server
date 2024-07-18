@@ -2,20 +2,26 @@ const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
 const process = require('process');
 const path = require("path");
+const moment = require('moment-timezone');
 
-const {combine, timestamp, label, printf} = winston.format;
+const { combine, label, printf } = winston.format;
 
 const logDir = `${process.cwd()}/logs`;
 
-const logFormat = printf(({level, message, label, timestamp}) => {
+const logFormat = printf(({ level, message, label, timestamp }) => {
     return `${timestamp} [${label}] ${level}: ${message}`;
+});
+
+const timestampFormat = winston.format((info) => {
+    info.timestamp = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss');
+    return info;
 });
 
 const logger = winston.createLogger({
     format: combine(
-        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
-        label({label: 'kyc'}),
-        logFormat,
+            timestampFormat(),
+            label({ label: 'kyc' }),
+            logFormat
     ),
     transports: [
         new winstonDaily({
@@ -29,10 +35,10 @@ const logger = winston.createLogger({
         new winston.transports.Console({
             level: 'debug',
             format: combine(
-                timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
-                label({label: 'kyc-console'}),
-                winston.format.colorize(),
-                logFormat
+                    timestampFormat(),
+                    label({ label: 'kyc-console' }),
+                    winston.format.colorize(),
+                    logFormat
             )
         })
     ],

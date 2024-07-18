@@ -1,1 +1,4 @@
 /environments/
+/dist/
+/node_modules/
+/logs/

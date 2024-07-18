@@ -3,12 +3,8 @@ const PROD = "PROD";
 
 const FRONT_END_SERVER_API_ADDRESS = {
     prefix: "front-api",
-    test: function() {
-        return `http://15.165.28.190:5173/${this.prefix}`;
-    }(),
-    prod: function() {
-        return `https://pgonline.eximbay.com/${this.prefix}`;
-    }()
+    test: `http://15.165.28.190:5173/front-api`,
+    prod: `https://pgonline.eximbay.com/front-api`
 };
 const FRONT_END_SERVER_ADDRESS = {
     test: "http://15.165.28.190:5173",
