@@ -11,7 +11,11 @@ const {
     SCREENING_MID,
     TEST,
     PROD,
-    FRONT_END_SERVER_API_ADDRESS
+    FRONT_END_SERVER_API_ADDRESS,
+    getAuthorizationHeader,
+    getFGKeyEndpoint,
+    getScreeningMID,
+    getFrontEndAPIServerAddress
 } = require("./api-const");
 
 async function generateFGKey(loginId, operatorEmail) {
@@ -60,42 +64,6 @@ async function generateFGKey(loginId, operatorEmail) {
     } catch (error) {
         console.error(error);
         throw error;
-    }
-}
-
-function getAuthorizationHeader() {
-    switch (process.env.ENVIRONMENT) {
-        case TEST:
-            return AUTHORIZATION_HEADER.test;
-        case PROD:
-            return AUTHORIZATION_HEADER.prod;
-    }
-}
-
-function getFGKeyEndpoint() {
-    switch (process.env.ENVIRONMENT) {
-        case TEST:
-            return FG_KEY_ENDPOINT.test;
-        case PROD:
-            return FG_KEY_ENDPOINT.prod;
-    }
-}
-
-function getScreeningMID() {
-    switch (process.env.ENVIRONMENT) {
-        case TEST:
-            return SCREENING_MID.test;
-        case PROD:
-            return SCREENING_MID.prod;
-    }
-}
-
-function getFrontEndAPIServerAddress() {
-    switch (process.env.ENVIRONMENT) {
-        case TEST:
-            return FRONT_END_SERVER_API_ADDRESS.test;
-        case PROD:
-            return FRONT_END_SERVER_API_ADDRESS.prod;
     }
 }
 
