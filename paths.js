@@ -5,6 +5,7 @@ const DISTRIBUTION_PATH = path.join(ROOT_PATH, "dist");
 const INDEX_HTML_PATH = path.join(DISTRIBUTION_PATH, "index.html");
 const MASKED_IMAGE_PATH = path.join(ROOT_PATH, "public");
 const BIZ_LICENSE_PATH = path.join(ROOT_PATH, "public", "biz-license");
+const ID_CARD = path.join(ROOT_PATH, "public", "id-card");
 
 const ENV_PATH = path.join(ROOT_PATH, "environments");
 const EMAIL_ACCOUNT_ENV_PATH = path.join(ENV_PATH, "email-account.env");
