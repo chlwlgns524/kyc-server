@@ -1,4 +1,4 @@
-const {LOGGER_PATH, BIZ_LICENSE_PATH} = require('../paths');
+const {LOGGER_PATH, BIZ_LICENSE_PATH, ID_CARD_PATH} = require('../paths');
 const logger = require(LOGGER_PATH);
 const express = require('express');
 const router = express.Router();
@@ -12,7 +12,14 @@ const iconv = require('iconv-lite');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const dir = BIZ_LICENSE_PATH;
+        let dir;
+        if (req.originalname.includes('/ekyc/biz-license'))
+            dir = BIZ_LICENSE_PATH;
+        else if (req.originalname.includes('/ekyc/id-card'))
+            dir = ID_CARD_PATH;
+        else
+            return cb(new Error('Invalid path'), false);
+
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
         }
