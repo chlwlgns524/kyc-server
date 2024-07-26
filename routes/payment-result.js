@@ -18,6 +18,7 @@ router.post('/payment-result', postLoggerDecorator((req, res) => {
     if (rescode === SUCCESS_CODE) {
         payScreeningFee(loginId)
                 .then(response => {
+                    logger.info(`response -> ${JSON.stringify(response, null, 2)}`);
                     logger.info(`${loginId} is redirected to /payment-success`);
                     res.redirect('/payment-success');
                 })
