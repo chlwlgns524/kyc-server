@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const postLoggerDecorator = require("../decorators/loggerDecorator");
 const {payScreeningFee} = require("../utils/api");
-
+// 1.
 const SUCCESS_CODE = "0000";
 
 router.use(express.json());
