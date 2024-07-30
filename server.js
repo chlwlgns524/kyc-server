@@ -16,7 +16,7 @@ app.use(`/${FRONT_END_SERVER_API_ADDRESS.prefix}`, require("./middlewares/before
 
 const apiRouter = express.Router();
 app.use(`/${FRONT_END_SERVER_API_ADDRESS.prefix}`, apiRouter);
-apiRouter.use(require('./routes/send-email'));
+apiRouter.use(require('./routes/verify'));
 apiRouter.use(require('./routes/ekyc'));
 apiRouter.use(require('./routes/fgkey'));
 apiRouter.use(require('./routes/payment-result'));
