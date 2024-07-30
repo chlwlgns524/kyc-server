@@ -10,7 +10,7 @@ const postLoggerDecorator = require("../decorators/loggerDecorator");
 
 router.use(express.json());
 
-router.post('/send-email', postLoggerDecorator((req, res) => {
+router.post('/verify/:type', postLoggerDecorator((req, res) => {
     const { to, authNumber } = req.body;
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -20,6 +20,9 @@ router.post('/send-email', postLoggerDecorator((req, res) => {
             pass: process.env.PASSWORD,
         },
     });
+
+    const { type } = req.params;
+    const message = findMessage(type);
 
     const mailOptions = {
         from: 'webmaster@eximbay.com',
@@ -43,7 +46,7 @@ router.post('/send-email', postLoggerDecorator((req, res) => {
         <td style="padding-top:30px;padding-bottom:10px;font-family:나눔고딕,돋움,dotum,Helvetica,Arial,san-serif;font-size:14px"> 안녕하세요, 엑심베이 입니다. </td>    
         </tr>    
         <tr>        
-        <td style="padding-top:15px;padding-bottom:45px;line-height:1.8;font-size:14px"> 엑심베이 회원가입을 위한 인증키가 발급되었습니다. <br>아래의 인증번호를 입력하시면 본인인증이 완료됩니다. </td>    
+        <td style="padding-top:15px;padding-bottom:45px;line-height:1.8;font-size:14px"> ${message} <br>아래의 인증번호를 입력하시면 본인인증이 완료됩니다. </td>    
         </tr>    
         <tr>        
         <td style="padding-bottom:10px;font-size:14px"><strong>본인인증 인증번호</strong></td>    
@@ -91,5 +94,16 @@ router.post('/send-email', postLoggerDecorator((req, res) => {
                 .send('Email sent: ' + info.response);
     });
 }));
+
+function findMessage(type) {
+    switch (type) {
+        case "signup":
+            return "엑심베이 회원가입을 위한 인증키가 발급되었습니다."
+        case "find-auth":
+            return "아이디 또는 비밀번호 변경을 위한 인증키가 발급되었습니다."
+        default:
+            return "";
+    }
+}
 
 module.exports = router;
